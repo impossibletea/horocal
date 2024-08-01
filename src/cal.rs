@@ -90,14 +90,14 @@ impl fmt::Display for Year
         }
         for day in 0..month_length(self.current_month(), is_leap(self.ad))
         {
-            if weekday == 0 { writeln!(f)? }
             let today = self.day_offset() + day;
             let mood = &self.days[today as usize];
             let sq = if self.today + 1 == today { "\u{1b}[7m" } else { "" };
             write!(f, "{}{}{:>2}\u{1b}[0m ",
-                   sq, mood, day+1)?;
+                   mood, sq, day+1)?;
             weekday += 1;
             weekday %= 7;
+            if weekday == 0 { writeln!(f)? }
         }
         Ok(())
     }

@@ -75,7 +75,7 @@ impl fmt::Display for Mood
         {
             Self::Worst  => 91,
             Self::Bad    => 31,
-            Self::Normal => 30,
+            Self::Normal =>  0,
             Self::Good   => 32,
             Self::Best   => 92,
         };
