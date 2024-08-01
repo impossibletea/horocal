@@ -1,9 +1,22 @@
+use std::{
+    error::Error,
+    time::{
+        SystemTime,
+        UNIX_EPOCH,
+    },
+};
+
 mod cal;
 use cal::Year;
 
-fn main()
+fn main() -> Result<(), Box<dyn Error>>
 {
-    let unix_timestamp = 1707166800;
-    let year = Year::new(unix_timestamp);
+    let now =
+        SystemTime::now()
+        .duration_since(UNIX_EPOCH)?
+        .as_secs();
+    let year = Year::new(now);
     println!("{year}");
+
+    Ok(())
 }
