@@ -23,8 +23,8 @@ impl Year
         const YEAR_SECS:   u64 = (DAY_SECS as f32 * YEAR_LENGTH) as u64;
 
         let ad = (unix_timestamp / YEAR_SECS + 1970) as u16;
-        let today = ((unix_timestamp % YEAR_SECS) / DAY_SECS) as u16;
-        let weekd = ((unix_timestamp / DAY_SECS) % 7 + 4) as u8;
+        let today = (unix_timestamp % YEAR_SECS / DAY_SECS) as u16;
+        let weekd = (ad as u64 * YEAR_SECS / DAY_SECS % 7) as u8;
         let length = if is_leap(ad) { 366 } else { 365 };
         let rng = Horo::new(ad as u64);
         let days = (0..length).zip(rng).map(|(_, m)| m).collect();
@@ -88,10 +88,14 @@ impl fmt::Display for Year
         {
             write!(f, "   ")?;
         }
-        for day in 1..=month_length(self.current_month(), is_leap(self.ad))
+        for day in 0..month_length(self.current_month(), is_leap(self.ad))
         {
             if weekday == 0 { writeln!(f)? }
-            write!(f, "{:>2} ", day)?;
+            let today = self.day_offset() + day;
+            let mood = &self.days[today as usize];
+            let sq = if self.today + 1 == today { "\u{1b}[7m" } else { "" };
+            write!(f, "{}{}{:>2}\u{1b}[0m ",
+                   sq, mood, day+1)?;
             weekday += 1;
             weekday %= 7;
         }
@@ -118,3 +122,4 @@ const fn month_length(month: u8, leap: bool) -> u16
         _ => return 366,
     }
 }
+
