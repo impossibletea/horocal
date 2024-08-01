@@ -92,7 +92,7 @@ impl fmt::Display for Year
         {
             let today = self.day_offset() + day;
             let mood = &self.days[today as usize];
-            let sq = if self.today + 1 == today { "\u{1b}[7m" } else { "" };
+            let sq = if self.today == today { "\u{1b}[7m" } else { "" };
             write!(f, "{}{}{:>2}\u{1b}[0m ",
                    mood, sq, day+1)?;
             weekday += 1;

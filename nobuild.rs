@@ -24,6 +24,8 @@ fn main() -> Result<(), Box<dyn Error>>
     .arg("src/main.rs")
     .arg("-o")
     .arg(EXEC_PATH)
+    .arg("-C")
+    .arg("opt-level=3")
     .spawn()?;
 
     eprintln!("INFO: created an executable {EXEC_PATH}");
