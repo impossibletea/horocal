@@ -15,6 +15,6 @@ Requires rustc.
 ```console
 $ rustc nobuild.rs
 $ ./nobuild
-$ mv build/horocal ~/.local/bin/
+$ mv build/hcal ~/.local/bin/
 ```
 

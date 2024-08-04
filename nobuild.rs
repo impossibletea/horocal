@@ -8,7 +8,7 @@ use std::{
     },
 };
 
-const EXEC_PATH: &str = "build/horocal";
+const EXEC_PATH: &str = "build/hcal";
 
 fn main() -> Result<(), Box<dyn Error>>
 {
