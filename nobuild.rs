@@ -26,7 +26,8 @@ fn main() -> Result<(), Box<dyn Error>>
     .arg(EXEC_PATH)
     .arg("-C")
     .arg("opt-level=3")
-    .spawn()?;
+    .spawn()?
+    .wait()?;
 
     eprintln!("INFO: created an executable {EXEC_PATH}");
 
@@ -55,7 +56,8 @@ fn rebuild_myself() -> Result<(), Box<dyn Error>>
 
     Command::new("rustc")
     .arg("nobuild.rs")
-    .spawn()?;
+    .spawn()?
+    .wait()?;
 
     Ok(())
 }
