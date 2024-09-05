@@ -16,5 +16,6 @@ Requires rustc.
 $ rustc nobuild.rs
 $ ./nobuild
 $ mv build/hcal ~/.local/bin/
+$ HCAL_SIGN=scorpio hcal
 ```
 

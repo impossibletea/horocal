@@ -14,9 +14,61 @@ pub struct Year
     days:  Vec<Mood>,
 }
 
+pub enum Sign
+{
+    Aries,     Taurus,   Gemini,
+    Cances,    Leo,      Virgo,
+    Libra,     Scorpio,  Sagittarius,
+    Capricorn, Aquarius, Pisces,
+}
+
+impl Sign
+{
+    pub fn from_string(input: String) -> Result<Self, String>
+    {
+        match input.as_str()
+        {
+            "aries"       => Ok(Self::Aries),
+            "taurus"      => Ok(Self::Taurus),
+            "gemini"      => Ok(Self::Gemini),
+            "cances"      => Ok(Self::Cances),
+            "leo"         => Ok(Self::Leo),
+            "virgo"       => Ok(Self::Virgo),
+            "libra"       => Ok(Self::Libra),
+            "scorpio"     => Ok(Self::Scorpio),
+            "sagittarius" => Ok(Self::Sagittarius),
+            "capricorn"   => Ok(Self::Capricorn),
+            "aquarius"    => Ok(Self::Aquarius),
+            "pisces"      => Ok(Self::Pisces),
+            _             => Err(
+format!(
+"\
+Could not match \"{}\"
+Possible values:
+    aries
+    taurus
+    gemini
+    cances
+    leo
+    virgo
+    libra
+    scorpio
+    sagittarius
+    capricorn
+    aquarius
+    pisces\
+",
+input
+)
+            )
+        }
+    }
+}
+
 impl Year
 {
-    pub fn new(unix_timestamp: u64) -> Self
+    pub fn new(unix_timestamp: u64,
+               sign:           Sign) -> Self
     {
         const DAY_SECS:    u64 = 24 * 60 * 60;
         const YEAR_LENGTH: f32 = 365. + 1./4. - 1./100. + 1./400.;
@@ -26,7 +78,7 @@ impl Year
         let today = (unix_timestamp % YEAR_SECS / DAY_SECS) as u16;
         let weekd = (ad as u64 * YEAR_SECS / DAY_SECS % 7) as u8;
         let length = if is_leap(ad) { 366 } else { 365 };
-        let rng = Horo::new(ad as u64);
+        let rng = Horo::new(ad as u64 + sign as u64);
         let days = (0..length).zip(rng).map(|(_, m)| m).collect();
 
         Self
