@@ -17,7 +17,7 @@ pub struct Year
 pub enum Sign
 {
     Aries,     Taurus,   Gemini,
-    Cances,    Leo,      Virgo,
+    Cancer,    Leo,      Virgo,
     Libra,     Scorpio,  Sagittarius,
     Capricorn, Aquarius, Pisces,
 }
@@ -31,7 +31,7 @@ impl Sign
             "aries"       => Ok(Self::Aries),
             "taurus"      => Ok(Self::Taurus),
             "gemini"      => Ok(Self::Gemini),
-            "cances"      => Ok(Self::Cances),
+            "cancer"      => Ok(Self::Cancer),
             "leo"         => Ok(Self::Leo),
             "virgo"       => Ok(Self::Virgo),
             "libra"       => Ok(Self::Libra),
@@ -48,7 +48,7 @@ Possible values:
     aries
     taurus
     gemini
-    cances
+    cancer
     leo
     virgo
     libra
