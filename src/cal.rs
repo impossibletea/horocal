@@ -12,8 +12,10 @@ pub struct Year
     today: u16,
     weekd: u8,
     days:  Vec<Mood>,
+    sign:  Sign,
 }
 
+#[derive(Copy, Clone)]
 pub enum Sign
 {
     Aries,     Taurus,   Gemini,
@@ -65,6 +67,30 @@ input
     }
 }
 
+impl fmt::Display for Sign
+{
+    fn fmt(&self,
+           f: &mut fmt::Formatter) -> Result<(), fmt::Error>
+    {
+        let symbol = match self
+        {
+            Self::Aries       => '\u{2648}',
+            Self::Taurus      => '\u{2649}',
+            Self::Gemini      => '\u{264a}',
+            Self::Cancer      => '\u{264b}',
+            Self::Leo         => '\u{264c}',
+            Self::Virgo       => '\u{264d}',
+            Self::Libra       => '\u{264e}',
+            Self::Scorpio     => '\u{264f}',
+            Self::Sagittarius => '\u{2650}',
+            Self::Capricorn   => '\u{2651}',
+            Self::Aquarius    => '\u{2652}',
+            Self::Pisces      => '\u{2653}',
+        };
+        write!(f, "{symbol}")
+    }
+}
+
 impl Year
 {
     pub fn new(unix_timestamp: u64,
@@ -87,6 +113,7 @@ impl Year
             today,
             weekd,
             days,
+            sign,
         }
     }
 
@@ -131,8 +158,8 @@ impl fmt::Display for Year
             9 => "October", 10 => "November", 11 => "December",
             _ => "How"
         };
-        let header = format!("{} {}",
-                             month, self.ad);
+        let header = format!("{}{} {}",
+                             self.sign, month, self.ad);
         writeln!(f, "{:^20}", header)?;
         writeln!(f, "Su Mo Tu We Th Fr Sa")?;
         let mut weekday = (self.day_offset() + self.weekd as u16) % 7;
