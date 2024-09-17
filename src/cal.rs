@@ -198,7 +198,7 @@ const fn month_length(month: u8, leap: bool) -> u16
         0 | 2 | 4 | 6 | 7 | 9 | 11 => 31,
         3 | 5 | 8 | 10             => 30,
         1 => february,
-        _ => return 366,
+        _ => 366,
     }
 }
 
